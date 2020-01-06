@@ -1,8 +1,4 @@
-# Part IV: Objects
-
-*Note: Before getting started on these exercises, please be certain that you've read through the root [README.md](../README.md) file in this repository.*
-
-## Exercises
+# Part IV: Objects (Solutions)
 
 ### Basic Requirements
 
@@ -22,10 +18,42 @@ Fix the syntax & style issues with the three objects below:
 }
 ```
 
+**FIXED:**
+```js
+{
+  firstName: "Josh",
+  lastName: "Lehman"
+}
+
+{
+  a: 1,
+  b: 2,
+  c: 3,
+  d: 4
+}
+
+{
+  animal: "dog",
+  noise: "bark",
+  age: 3,
+  type: "Labrador",
+  color: "Yellow";
+}
+```
+
 #### Creating Objects
 
 1.  Create an object that represents *you*. It should contain your first name,
     last name, age and hometown.
+
+  ```js
+  {
+    firstName: "Michael",
+    lastName: "Jordan",
+    age: 56,
+    hometown: "Wilmington, NC"
+  }
+  ```
 
 2.  Add three more key/value pairs to your object that represent other attributes
     of yourself. Ideas include (but are not limited to):
@@ -35,6 +63,18 @@ Fix the syntax & style issues with the three objects below:
     - Pets (number of pets, names of pets, etc.)
 
     **HINT:** You can just modify the object that you created before.
+
+  ```js
+  {
+    firstName: "Michael",
+    lastName: "Jordan",
+    age: 56,
+    hometown: "Wilmington, NC",
+    occupation: "NBA Owner",
+    dateOfBirth: "February 17, 1963",
+    nbaTitles: 6
+  }
+  ```
 
 3.  The values in an object can be objects themselves, and in fact, this is a
     very common pattern. For example, consider the following object that
@@ -70,6 +110,19 @@ Fix the syntax & style issues with the three objects below:
     object is called `you`):
 
     ```js
+    var you = {
+      name: {
+        first: "Michael",
+        middle: "Jeffrey",
+        last: "Jordan"
+      },
+      age: 56,
+      hometown: "Wilmington, NC",
+      occupation: "NBA Owner",
+      dateOfBirth: "February 17, 1963",
+      nbaTitles: 6
+    };
+
     you.name.last; // => YOUR LAST NAME
     ```
 
@@ -83,6 +136,19 @@ Fix the syntax & style issues with the three objects below:
 
     **HINT:** Most movies have multiple actors. What data-structure do we use to
     represent a collection of similar things?
+
+  ```js
+  var favMovie = {
+    title: "The Shawshank Redemption",
+    director: {
+      firstName: "Frank",
+      lastName: "Darabont"
+    },
+    yearReleased: 1994,
+    rating: 9.3,
+    actors: ["Tim Robbins", "Morgan Freeman", "Bob Gunton"]
+  };
+  ```
 
 #### Creating New Key/Value Pairs
 
@@ -109,6 +175,9 @@ Fix the syntax & style issues with the three objects below:
 4. In the console, add a `favoriteColor`
    key/value pair to the object that represents you.
 
+   ```js
+   obj.favoriteColor = "Blue";
+
 #### Accessing Values by Key
 
 1.  Fix the attempts to access values in the `person` object:
@@ -123,6 +192,12 @@ Fix the syntax & style issues with the three objects below:
     person[age]; // => 26
     person.key; // => "Alyssa P. Hacker"
     ```
+
+  **FIXED**
+  ```js
+  person["age"]; // => 26
+  person.name; // => "Alyssa P. Hacker"
+  ```
 
 2. Write a function `fullName` that takes a person object as an argument, and
    returns that person's full name as a string. By *person object*, we mean an
@@ -140,7 +215,7 @@ Fix the syntax & style issues with the three objects below:
    };
 
    function fullName(person) {
-     // TODO: your code here
+     return person.name.first + " " + person.name.middle + " " + person.name.last;
    }
 
    fullName(alyssa); // => "Alyssa P. Hacker"
@@ -157,6 +232,15 @@ Fix the syntax & style issues with the three objects below:
    the person has a middle name -- if it doesn't produce the output shown above
    when given the object `{name: {first: "John", last: "Doe"}}`, fix it so that
    it does.
+
+  ```js
+  function fullName(person) {
+    if (person.name.middle) {
+      return person.name.first + " " + person.name.middle + " " + person.name.last;
+    }
+    return person.name.first + " " + person.name.last;
+  }
+  ```
 
 4. We often deal with **arrays of objects**; below is an example of an array of
    objects, where each object represents a *person*:
@@ -177,9 +261,44 @@ Fix the syntax & style issues with the three objects below:
    2. Write a function that, when passed an array of *people* (person objects) as
       an argument, returns an array of their **full names**. Can you make use of
       your `fullName` function here?
+
+  ```js
+  function allFullNames(people) {
+    var result = [];
+    for (var i = 0; i < people.length; i = i + 1) {
+      var name = fullName(people[i]);
+      result.push(name);
+    }
+    return result;
+  }
+  ```
+
    3. Write a function that finds the average age of the `people` array.
+
+  ```js
+  function averageAge(people) {
+    var totalAges = 0;
+    for (var i = 0; i < people.length; i = i + 1) {
+      totalAges = totalAges + people[i].age;
+    }
+    return totalAges / people.length;
+  }
+  ```
+
    4. Write a function that, when given *people* and an *age* as arguments,
       returns an array of just the people that are older than the specified age.
+
+  ```js
+  function olderThan(people, age) {
+    var result = [];
+    for (var i = 0; i < people.length; i = i + 1) {
+      if (people[i].age > age) {
+        result.push(people[i]);
+      }
+    }
+    return result;
+  }
+  ```
 
 #### Iterating over Keys & Values
 
@@ -222,9 +341,8 @@ Fix the syntax & style issues with the three objects below:
    - Your favorite drink
    - A recipe
    - Sports or hobbies
-   - Your car/bike/hover-board/vehicle-like thing
+   - Your car/bike/hoverboard/vehicle-like thing
    - Literally anything
-
 
 2. Write a function `countWords` that, when given a string as an argument,
    returns an *object* where *keys* are the words in the string, and *values*
